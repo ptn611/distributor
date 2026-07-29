@@ -19,6 +19,7 @@ solana-rpc-client-api = { workspace = true }
 solana-sdk = { workspace = true }
 solana-pubsub-client = "3"
 solana-account-decoder-client-types = "3"
+solana-commitment-config = "3"
 spl-associated-token-account = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true }

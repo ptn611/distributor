@@ -1,5 +1,5 @@
 use crate::*;
-use solana_program::compute_budget::ComputeBudgetInstruction;
+use solana_compute_budget_instruction::ComputeBudgetInstruction;
 
 pub fn process_new_distributor(args: &Args, new_distributor_args: &NewDistributorArgs) {
     let client = RpcClient::new_with_commitment(&args.rpc_url, CommitmentConfig::finalized());

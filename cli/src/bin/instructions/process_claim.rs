@@ -1,5 +1,5 @@
 use crate::*;
-use solana_program::compute_budget::ComputeBudgetInstruction;
+use solana_compute_budget_instruction::ComputeBudgetInstruction;
 
 pub fn process_claim(args: &Args, claim_args: &ClaimArgs) {
     let keypair = read_keypair_file(&args.keypair_path.clone().unwrap())

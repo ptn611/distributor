@@ -12,7 +12,7 @@ use dashmap::{DashMap, mapref::entry::Entry};
 use futures::future::join_all;
 use futures_util::StreamExt;
 use merkle_distributor::state::{claim_status::ClaimStatus, merkle_distributor::MerkleDistributor};
-use solana_account_decoder::{UiAccountData, UiAccountEncoding};
+use solana_account_decoder_client_types::{UiAccountData, UiAccountEncoding};
 use solana_program::pubkey::Pubkey;
 use solana_pubsub_client::nonblocking::pubsub_client::PubsubClient;
 use solana_rpc_client::nonblocking::rpc_client::RpcClient;
