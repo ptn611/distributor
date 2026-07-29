@@ -4,9 +4,8 @@ extern crate merkle_distributor;
 pub mod instructions;
 use std::{fs, ops::Deref, path::PathBuf, rc::Rc, str::FromStr};
 
-use anchor_client::{
-    Client as AnchorClient, Cluster, Program, solana_sdk::signer::keypair::read_keypair_file,
-};
+use anchor_client::{Client as AnchorClient, Cluster, Program, CommitmentConfig, RpcSendTransactionConfig};
+use solana_keypair::read_keypair_file;
 use anchor_lang::{
     AccountDeserialize, InstructionData, Key, ToAccountMetas,
     prelude::{Clock, Pubkey},
