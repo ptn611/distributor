@@ -340,24 +340,24 @@ async fn get_eligibility(
 
     let start_amount_pct_num = state.start_amount_pct * START_AMOUNT_PCT_PRECISION;
     let start_amount = (proof.amount as u128)
-        .checked_mul(start_amount_pct_num)
-        .ok_or_else(|| {
-            let err = ApiError::MathError();
-            error!(
-                "Math error occurred (1), amount: {}, START_AMOUNT_PCT_NUM: {}, START_AMOUNT_PCT_DENOM: {}",
-                proof.amount, start_amount_pct_num, START_AMOUNT_PCT_DENOM
-            );
-            err
-        })?
-        .checked_div(START_AMOUNT_PCT_DENOM)
-        .ok_or_else(|| {
-            let err = ApiError::MathError();
-            error!(
-                "Math error occurred (2), amount: {}, START_AMOUNT_PCT_NUM: {}, START_AMOUNT_PCT_DENOM: {}",
-                proof.amount, start_amount_pct_num, START_AMOUNT_PCT_DENOM
-            );
-            err
-        })?;
+		.checked_mul(start_amount_pct_num)
+		.ok_or_else(|| {
+			let err = ApiError::MathError();
+			error!(
+				"Math error occurred (1), amount: {}, START_AMOUNT_PCT_NUM: {}, START_AMOUNT_PCT_DENOM: {}",
+				proof.amount, start_amount_pct_num, START_AMOUNT_PCT_DENOM
+			);
+			err
+		})?
+		.checked_div(START_AMOUNT_PCT_DENOM)
+		.ok_or_else(|| {
+			let err = ApiError::MathError();
+			error!(
+				"Math error occurred (2), amount: {}, START_AMOUNT_PCT_NUM: {}, START_AMOUNT_PCT_DENOM: {}",
+				proof.amount, start_amount_pct_num, START_AMOUNT_PCT_DENOM
+			);
+			err
+		})?;
 
     Ok(Json(EligibilityResp {
         claimant: user_pubkey.clone(),

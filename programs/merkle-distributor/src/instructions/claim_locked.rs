@@ -139,7 +139,7 @@ pub fn handle_claim_locked(ctx: Context<ClaimLocked>) -> Result<()> {
     );
     emit!(ClaimedEvent {
         claimant: ctx.accounts.claimant.key(),
-        amount,
+        amount
     });
     Ok(())
 }
