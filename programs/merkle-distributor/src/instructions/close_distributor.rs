@@ -44,7 +44,7 @@ pub fn handle_close_distributor(ctx: Context<CloseDistributor>) -> Result<()> {
 
     token::transfer(
         CpiContext::new(
-            ctx.accounts.token_program.to_account_info(),
+            *ctx.accounts.token_program.key,
             token::Transfer {
                 from: ctx.accounts.token_vault.to_account_info(),
                 to: ctx.accounts.destination_token_account.to_account_info(),

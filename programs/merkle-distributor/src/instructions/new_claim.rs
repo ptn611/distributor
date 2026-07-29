@@ -1,7 +1,7 @@
 use anchor_lang::{
-    Accounts, Key, Result, context::Context, prelude::*, solana_program::hash::hashv,
-    system_program::System,
+    Accounts, Key, Result, context::Context, prelude::*, system_program::System,
 };
+use solana_program::hash::hashv;
 use anchor_spl::{
     token,
     token::{Token, TokenAccount},
@@ -154,7 +154,7 @@ pub fn handle_new_claim(
 
     token::transfer(
         CpiContext::new(
-            ctx.accounts.token_program.to_account_info(),
+             *ctx.accounts.token_program.key,
             token::Transfer {
                 from: ctx.accounts.from.to_account_info(),
                 to: ctx.accounts.to.to_account_info(),

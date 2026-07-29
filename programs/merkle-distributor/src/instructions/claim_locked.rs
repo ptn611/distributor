@@ -90,7 +90,7 @@ pub fn handle_claim_locked(ctx: Context<ClaimLocked>) -> Result<()> {
 
     token::transfer(
         CpiContext::new(
-            ctx.accounts.token_program.to_account_info(),
+             *ctx.accounts.token_program.key,
             token::Transfer {
                 from: ctx.accounts.from.to_account_info(),
                 to: ctx.accounts.to.to_account_info(),
