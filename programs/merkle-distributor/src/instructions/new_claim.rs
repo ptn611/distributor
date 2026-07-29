@@ -1,6 +1,6 @@
 use anchor_lang::{
-    context::Context, prelude::*, solana_program::hash::hashv, system_program::System, Accounts,
-    Key, Result,
+    Accounts, Key, Result, context::Context, prelude::*, solana_program::hash::hashv,
+    system_program::System,
 };
 use anchor_spl::{
     token,
@@ -80,7 +80,6 @@ pub struct NewClaim<'info> {
 ///     2. The claimant is the owner of the to account
 ///     3. Num nodes claimed is less than max_num_nodes
 ///     4. The merkle proof is valid
-#[allow(clippy::result_large_err)]
 pub fn handle_new_claim(
     ctx: Context<NewClaim>,
     amount_unlocked: u64,

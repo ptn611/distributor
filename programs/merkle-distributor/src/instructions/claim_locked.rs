@@ -1,9 +1,9 @@
 use anchor_lang::{
+    Accounts, Result, ToAccountInfo,
     accounts::{account::Account, program::Program, signer::Signer},
     context::{Context, CpiContext},
     emit,
     prelude::*,
-    Accounts, Result, ToAccountInfo,
 };
 use anchor_spl::token::{self, Token, TokenAccount};
 
@@ -62,7 +62,6 @@ pub struct ClaimLocked<'info> {
 ///     2. The withdraw-able amount is greater than 0
 ///     3. The locked amount withdrawn is ≤ than the locked amount
 ///     4. The distributor amount claimed is ≤ than the max total claim
-#[allow(clippy::result_large_err)]
 pub fn handle_claim_locked(ctx: Context<ClaimLocked>) -> Result<()> {
     let distributor = &ctx.accounts.distributor;
 

@@ -1,8 +1,8 @@
 use anchor_lang::{
+    Accounts, Result,
     accounts::{account::Account, signer::Signer},
     context::Context,
     prelude::*,
-    Accounts, Result,
 };
 
 use crate::{error::ErrorCode, state::merkle_distributor::MerkleDistributor};
@@ -27,7 +27,6 @@ pub struct SetAdmin<'info> {
 /// Sets new admin account
 /// CHECK:
 ///     1. The new admin is not the same as the old one
-#[allow(clippy::result_large_err)]
 pub fn handle_set_admin(ctx: Context<SetAdmin>) -> Result<()> {
     let distributor = &mut ctx.accounts.distributor;
 

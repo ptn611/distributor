@@ -10,7 +10,10 @@
 //!
 //! The Merkle distributor is also significantly easier to manage from an operations perspective, since one does not need to send a transaction to each individual address that may be redeeming tokens.
 
-#![allow(clippy::too_many_arguments)]
+#![allow(
+    clippy::result_large_err,
+    reason = "Anchor Error contains String (>8 bytes), inherent to Anchor design"
+)]
 extern crate core;
 
 use anchor_lang::prelude::*;
@@ -56,7 +59,6 @@ pub mod merkle_distributor {
     /// - To be extra safe, after your transaction succeeds, read back the state of the created MerkleDistributor account and
     ///   assert the parameters are what you expect, most importantly the clawback_receiver and admin.
     /// - If your transaction fails, double check the value on-chain matches what you expect.
-    #[allow(clippy::result_large_err)]
     pub fn new_distributor(
         ctx: Context<NewDistributor>,
         version: u64,
@@ -83,22 +85,18 @@ pub mod merkle_distributor {
         )
     }
     /// only available in test phase
-    #[allow(clippy::result_large_err)]
     pub fn close_distributor(ctx: Context<CloseDistributor>) -> Result<()> {
         handle_close_distributor(ctx)
     }
     /// only available in test phase
-    #[allow(clippy::result_large_err)]
     pub fn close_claim_status(ctx: Context<CloseClaimStatus>) -> Result<()> {
         handle_close_status(ctx)
     }
 
-    #[allow(clippy::result_large_err)]
     pub fn set_enable_slot(ctx: Context<SetEnableSlot>, enable_slot: u64) -> Result<()> {
         handle_set_enable_slot(ctx, enable_slot)
     }
 
-    #[allow(clippy::result_large_err)]
     pub fn new_claim(
         ctx: Context<NewClaim>,
         amount_unlocked: u64,
@@ -108,22 +106,18 @@ pub mod merkle_distributor {
         handle_new_claim(ctx, amount_unlocked, amount_locked, proof)
     }
 
-    #[allow(clippy::result_large_err)]
     pub fn claim_locked(ctx: Context<ClaimLocked>) -> Result<()> {
         handle_claim_locked(ctx)
     }
 
-    #[allow(clippy::result_large_err)]
     pub fn clawback(ctx: Context<Clawback>) -> Result<()> {
         handle_clawback(ctx)
     }
 
-    #[allow(clippy::result_large_err)]
     pub fn set_clawback_receiver(ctx: Context<SetClawbackReceiver>) -> Result<()> {
         handle_set_clawback_receiver(ctx)
     }
 
-    #[allow(clippy::result_large_err)]
     pub fn set_admin(ctx: Context<SetAdmin>) -> Result<()> {
         handle_set_admin(ctx)
     }

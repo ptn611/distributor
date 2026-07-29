@@ -6,8 +6,9 @@ use std::{
     time::Duration,
 };
 
-use anchor_lang::{AccountDeserialize, Discriminator, __private::base64};
-use dashmap::{mapref::entry::Entry, DashMap};
+use anchor_lang::{AccountDeserialize, Discriminator};
+use base64::Engine;
+use dashmap::{DashMap, mapref::entry::Entry};
 use futures::future::join_all;
 use futures_util::StreamExt;
 use merkle_distributor::state::{claim_status::ClaimStatus, merkle_distributor::MerkleDistributor};
@@ -55,8 +56,6 @@ pub struct Cache {
     // pubsub_client: PubsubClient,
     program_id: Pubkey,
 
-    pub subscribed: bool,
-    // unsubscriber: Option<tokio::sync::watch::Sender<()>>,
     distributors: Vec<SingleDistributor>,
     unvested_users: Option<HashMap<String, u128>>,
 
@@ -78,8 +77,6 @@ impl Cache {
             claim_status_cache: Arc::new(DashMap::new()),
             distributor_cache: Arc::new(DashMap::new()),
             program_id,
-            subscribed: false,
-            // unsubscriber: None,
             distributors,
             unvested_users,
             default_start_ts,
@@ -148,7 +145,7 @@ impl Cache {
                                                     continue;
                                                 }
                                             };
-                                            let decoded_data = match base64::decode(data_str.as_bytes()) {
+                                            let decoded_data = match base64::engine::general_purpose::STANDARD.decode(data_str.as_bytes()) {
                                                 Ok(data) => data,
                                                 Err(_) => {
                                                     println!("Failed to decode base64 data");
@@ -337,7 +334,9 @@ impl Cache {
                     );
 
                     if retry_count >= MAX_RETRIES {
-                        println!("Max retries reached for distributor cache update. Skipping this cycle.");
+                        println!(
+                            "Max retries reached for distributor cache update. Skipping this cycle."
+                        );
                         break;
                     }
 

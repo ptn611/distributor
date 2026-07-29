@@ -1,4 +1,4 @@
-use anchor_lang::{account, context::Context, prelude::*, Accounts, Key, ToAccountInfo};
+use anchor_lang::{Accounts, Key, ToAccountInfo, context::Context, prelude::*};
 
 use crate::{
     error::ErrorCode,
@@ -29,8 +29,6 @@ pub struct CloseClaimStatus<'info> {
     pub distributor: Account<'info, MerkleDistributor>,
 }
 
-#[allow(clippy::result_large_err)]
 pub fn handle_close_status(_ctx: Context<CloseClaimStatus>) -> Result<()> {
     panic!();
-    Ok(())
 }

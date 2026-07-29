@@ -1,9 +1,9 @@
 use std::convert::Infallible;
 
 use axum::{
+    BoxError, Json,
     http::StatusCode,
     response::{IntoResponse, Response},
-    BoxError, Json,
 };
 use jito_merkle_tree::error::MerkleTreeError;
 use serde_derive::{Deserialize, Serialize};

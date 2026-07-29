@@ -1,5 +1,5 @@
 // https://github.com/jito-foundation/jito-solana/blob/v1.16.19-jito/merkle-tree/src/merkle_tree.rs
-use solana_program::hash::{hashv, Hash};
+use solana_program::hash::{Hash, hashv};
 
 // We need to discern between leaf and intermediate nodes to prevent trivial second
 // pre-image attacks.
@@ -61,11 +61,7 @@ impl<'a> Proof<'a> {
             let rsib = pe.2.unwrap_or(&candidate);
             let hash = hash_intermediate!(lsib, rsib);
 
-            if hash == *pe.0 {
-                Some(hash)
-            } else {
-                None
-            }
+            if hash == *pe.0 { Some(hash) } else { None }
         });
         result.is_some()
     }
@@ -164,7 +160,7 @@ impl MerkleTree {
         self.nodes.iter().last()
     }
 
-    pub fn find_path(&self, index: usize) -> Option<Proof> {
+    pub fn find_path(&self, index: usize) -> Option<Proof<'_>> {
         if index >= self.leaf_count {
             return None;
         }

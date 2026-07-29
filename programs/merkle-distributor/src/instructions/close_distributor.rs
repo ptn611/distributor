@@ -1,4 +1,4 @@
-use anchor_lang::{account, context::Context, prelude::*, Accounts, Key, ToAccountInfo};
+use anchor_lang::{Accounts, Key, ToAccountInfo, context::Context, prelude::*};
 use anchor_spl::token::{self, Token, TokenAccount};
 
 use crate::{error::ErrorCode, state::merkle_distributor::MerkleDistributor};
@@ -33,7 +33,6 @@ pub struct CloseDistributor<'info> {
     pub token_program: Program<'info, Token>,
 }
 
-#[allow(clippy::result_large_err)]
 pub fn handle_close_distributor(ctx: Context<CloseDistributor>) -> Result<()> {
     let distributor = &ctx.accounts.distributor;
     let seeds = [

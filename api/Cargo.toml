@@ -17,8 +17,8 @@ solana-program = { workspace = true }
 solana-rpc-client = { workspace = true }
 solana-rpc-client-api = { workspace = true }
 solana-sdk = { workspace = true }
-solana-pubsub-client = { version = "=1.16.16" }
-solana-account-decoder = { version = "=1.16.16" }
+solana-pubsub-client = { version = "1.18" }
+solana-account-decoder = { version = "1.18" }
 spl-associated-token-account = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true }
@@ -32,6 +32,7 @@ tokio-tungstenite = { version = "0.21.0", features = ["native-tls"] }
 dashmap = "5.5.3"
 futures = "0.3.30"
 csv.workspace = true
+base64 = "0.22"
 
 
 [dev-dependencies]

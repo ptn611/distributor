@@ -90,7 +90,7 @@ pub fn process_close_claim_status(args: &Args) {
                         println!("done close claim status {}", tx.get_signature());
                         close_ixs = vec![];
                     }
-                    Err(e) => {
+                    Err(_e) => {
                         println!("Failed to close claim status account");
                     }
                 }
@@ -114,7 +114,7 @@ pub fn process_close_claim_status(args: &Args) {
             Ok(_) => {
                 println!("done close claim status {}", tx.get_signature());
             }
-            Err(e) => {
+            Err(_e) => {
                 println!("Failed to close claim status account");
             }
         }

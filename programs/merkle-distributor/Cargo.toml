@@ -2,7 +2,7 @@
 name = "merkle-distributor"
 version = "0.0.2"
 description = "A Solana program for distributing tokens according to a Merkle root."
-edition = "2021"
+edition = "2024"
 license = "GPL-3.0"
 
 [lib]
@@ -18,9 +18,12 @@ default = ["mainnet-beta"]
 mainnet-beta = []
 
 [dependencies]
-anchor-lang = "0.28.0"
-anchor-spl = "0.28.0"
-bytemuck = "1.14.0"
+anchor-lang = { workspace = true }
+anchor-spl = { workspace = true }
+bytemuck = "1.13.0"
 jito-merkle-verify = { path = "../../verify" }
-solana-program = "1.16.16"
+solana-program = { workspace = true }
 solana-security-txt = "1.1.1"
+
+[lints.rust]
+unexpected_cfgs = { level = "allow" }

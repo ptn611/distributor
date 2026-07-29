@@ -9,11 +9,14 @@ pub fn process_create_merkle_tree(args: &Args, merkle_tree_args: &CreateMerkleTr
         println!("Mint is not set, will start creating merkle trees from version 0");
     }
     if args.mint != Pubkey::default() && merkle_tree_args.start_airdrop_version.is_none() {
-        println!("Finding next available airdrop version for mint: {}", args.mint);
-        
+        println!(
+            "Finding next available airdrop version for mint: {}",
+            args.mint
+        );
+
         let program_client = args.get_program_client();
         let rpc_client = program_client.rpc();
-        
+
         let mut current_version = 0;
         while current_version < 1000000000000000000 {
             let (distributor_pubkey, _bump) =
@@ -36,7 +39,10 @@ pub fn process_create_merkle_tree(args: &Args, merkle_tree_args: &CreateMerkleTr
         }
     } else if let Some(version) = merkle_tree_args.start_airdrop_version {
         start_airdrop_version = version;
-        println!("Using provided start airdrop version: {}", start_airdrop_version);
+        println!(
+            "Using provided start airdrop version: {}",
+            start_airdrop_version
+        );
     }
     let mut csv_entries = CsvEntry::new_from_file(&merkle_tree_args.csv_path).unwrap();
 
@@ -72,9 +78,12 @@ pub fn process_create_merkle_tree(args: &Args, merkle_tree_args: &CreateMerkleTr
         csv_entries = csv_entries[last_index..csv_entries.len()].to_vec();
 
         // use airdrop_version as version
-        let merkle_tree =
-            AirdropMerkleTree::new_from_entries(sub_tree, airdrop_version, merkle_tree_args.decimals)
-                .unwrap();
+        let merkle_tree = AirdropMerkleTree::new_from_entries(
+            sub_tree,
+            airdrop_version,
+            merkle_tree_args.decimals,
+        )
+        .unwrap();
 
         let base_path_clone = base_path.clone();
         let path = base_path_clone
@@ -86,7 +95,10 @@ pub fn process_create_merkle_tree(args: &Args, merkle_tree_args: &CreateMerkleTr
     }
 
     if merkle_tree_args.should_include_test_list {
-        println!("create merkle tree for test claming version {}", airdrop_version);
+        println!(
+            "create merkle tree for test claming version {}",
+            airdrop_version
+        );
         let test_list = get_test_list()
             .into_iter()
             .map(|x| CsvEntry {
@@ -96,9 +108,12 @@ pub fn process_create_merkle_tree(args: &Args, merkle_tree_args: &CreateMerkleTr
             })
             .collect::<Vec<CsvEntry>>();
 
-        let merkle_tree =
-            AirdropMerkleTree::new_from_entries(test_list, airdrop_version, merkle_tree_args.decimals as u32)
-                .unwrap();
+        let merkle_tree = AirdropMerkleTree::new_from_entries(
+            test_list,
+            airdrop_version,
+            merkle_tree_args.decimals as u32,
+        )
+        .unwrap();
         let base_path_clone = base_path.clone();
         let path = base_path_clone
             .as_path()
@@ -107,7 +122,7 @@ pub fn process_create_merkle_tree(args: &Args, merkle_tree_args: &CreateMerkleTr
         merkle_tree.write_to_file(&path);
         airdrop_version += 1;
     }
-    
+
     // Output the last airdrop version used
     println!("Last airdrop version created: {}", airdrop_version - 1);
 }

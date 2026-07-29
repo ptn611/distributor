@@ -1,4 +1,4 @@
-use anchor_lang::{account, context::Context, prelude::*, Accounts, Key, ToAccountInfo};
+use anchor_lang::{Accounts, Key, ToAccountInfo, context::Context, prelude::*};
 use anchor_spl::{
     associated_token::AssociatedToken,
     token::{Mint, Token, TokenAccount},
@@ -77,8 +77,10 @@ pub struct NewDistributor<'info> {
 ///     2. The clawback timestamp is after the end timestamp
 ///     3. The start, end, and clawback_start timestamps are all in the future
 ///     4. The clawback start is at least one day after end timestamp
-#[allow(clippy::too_many_arguments)]
-#[allow(clippy::result_large_err)]
+#[allow(
+    clippy::too_many_arguments,
+    reason = "Anchor instruction handler — parameter count determined by IDL"
+)]
 pub fn handle_new_distributor(
     ctx: Context<NewDistributor>,
     version: u64,
@@ -119,7 +121,7 @@ pub fn handle_new_distributor(
 
     let distributor = &mut ctx.accounts.distributor;
 
-    distributor.bump = *ctx.bumps.get("distributor").unwrap();
+    distributor.bump = ctx.bumps.distributor;
     distributor.version = version;
     distributor.root = root;
     distributor.mint = ctx.accounts.mint.key();

@@ -12,10 +12,9 @@ use futures::future::join_all;
 use jito_merkle_tree::{airdrop_merkle_tree::AirdropMerkleTree, utils::get_merkle_distributor_pda};
 use router::RouterState;
 use solana_program::pubkey::Pubkey;
-use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use tokio::sync::Mutex;
 use tracing::{info, instrument};
-use tracing_subscriber::{fmt, layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
+use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
 
 use crate::{cache::Cache, error::ApiError, router::SingleDistributor};
 pub type Result<T> = std::result::Result<T, ApiError>;
@@ -101,9 +100,6 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     println!("args: {:?}", args);
 
     println!("starting server at {}", args.bind_addr);
-
-    let rpc_client = RpcClient::new(args.rpc_url.clone());
-    info!("started rpc client at {}", args.rpc_url);
 
     let mut paths: Vec<_> = match fs::read_dir(&args.merkle_tree_path) {
         Ok(entries) => entries.filter_map(|r| r.ok()).collect(),
@@ -258,7 +254,6 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         basic_auth_password: args.basic_auth_password.clone(),
         tree: tree.lock().await.clone(),
         program_id: args.program_id,
-        rpc_client,
         cache,
         start_amount_pct,
     });

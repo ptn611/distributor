@@ -63,8 +63,7 @@ pub fn process_set_enable_slot_by_time(
 
         println!(
             "Successfully enable slot {slot} timestamp {} airdrop version {}! signature: {signature:#?}",
-            enable_time,
-            airdrop_version
+            enable_time, airdrop_version
         );
         return;
     }
@@ -100,8 +99,7 @@ pub fn process_set_enable_slot_by_time(
 
         println!(
             "Successfully enable slot {slot} timestamp {} airdrop version {}! signature: {signature:#?}",
-            enable_time,
-            merkle_tree.airdrop_version
+            enable_time, merkle_tree.airdrop_version
         );
     }
 }

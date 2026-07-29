@@ -7,12 +7,12 @@ use std::{
 };
 
 use axum::{
+    Json, Router,
     body::Body,
     error_handling::HandleErrorLayer,
     extract::{Path, State},
     response::IntoResponse,
     routing::get,
-    Json, Router,
 };
 
 use http::Request;
@@ -20,21 +20,20 @@ use jito_merkle_tree::{airdrop_merkle_tree::UserProof, tree_node::TreeNode};
 use merkle_distributor::state::merkle_distributor::MerkleDistributor;
 use serde_derive::{Deserialize, Serialize};
 use solana_program::pubkey::Pubkey;
-use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use tower::{
-    buffer::BufferLayer, limit::RateLimitLayer, load_shed::LoadShedLayer, timeout::TimeoutLayer,
-    ServiceBuilder,
+    ServiceBuilder, buffer::BufferLayer, limit::RateLimitLayer, load_shed::LoadShedLayer,
+    timeout::TimeoutLayer,
 };
 use tower_http::{
+    LatencyUnit,
     cors::{Any, CorsLayer},
     trace::{DefaultOnResponse, TraceLayer},
     validate_request::ValidateRequestHeaderLayer,
-    LatencyUnit,
 };
 
-use tracing::{error, info, instrument, warn, Span};
+use tracing::{Span, error, info, instrument, warn};
 
-use crate::{cache::Cache, error, error::ApiError, Result};
+use crate::{Result, cache::Cache, error, error::ApiError};
 
 const START_AMOUNT_PCT_PRECISION: u128 = 1_000;
 const START_AMOUNT_PCT_DENOM: u128 = 100 * START_AMOUNT_PCT_PRECISION;
@@ -108,7 +107,6 @@ pub struct RouterState {
     pub basic_auth_password: Option<String>,
     pub program_id: Pubkey,
     pub tree: HashMap<Pubkey, (Pubkey, TreeNode)>,
-    pub rpc_client: RpcClient,
     pub cache: Cache,
     pub start_amount_pct: u128,
 }
@@ -386,44 +384,6 @@ pub struct SingleDistributor {
     pub airdrop_version: u64,
     pub max_num_nodes: u64,
     pub max_total_claim: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone)]
-pub struct DistributorAccount {
-    /// Version of the airdrop
-    pub version: u64,
-    /// The 256-bit merkle root.
-    pub root: [u8; 32],
-    /// [Mint] of the token to be distributed.
-    pub mint: Pubkey,
-    /// Token Address of the vault
-    pub token_vault: Pubkey,
-    /// Maximum number of tokens that can ever be claimed from this [MerkleDistributor].
-    pub max_total_claim: u64,
-    /// Maximum number of nodes in [MerkleDistributor].
-    pub max_num_nodes: u64,
-    /// Total amount of tokens that have been claimed.
-    pub total_amount_claimed: u64,
-    /// Total amount of tokens that have been forgone.
-    pub total_amount_forgone: u64,
-    /// Number of nodes that have been claimed.
-    pub num_nodes_claimed: u64,
-    /// Lockup time start (Unix Timestamp)
-    pub start_ts: i64,
-    /// Lockup time end (Unix Timestamp)
-    pub end_ts: i64,
-    /// Clawback start (Unix Timestamp)
-    pub clawback_start_ts: i64,
-    /// Clawback receiver
-    pub clawback_receiver: Pubkey,
-    /// Admin wallet
-    pub admin: Pubkey,
-    /// Whether or not the distributor has been clawed back
-    pub clawed_back: bool,
-    /// this merkle tree is enable from this slot
-    pub enable_slot: u64,
-    /// indicate that whether admin can close this pool, for testing purpose
-    pub closable: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone)]

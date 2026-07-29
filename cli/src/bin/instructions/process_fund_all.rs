@@ -27,7 +27,7 @@ pub fn process_fund_all(args: &Args, fund_all_args: &FundAllArgs) {
             Some(ext) if ext == "json" => {
                 // Continue processing JSON files
             }
-            Some(ext) => {
+            Some(_ext) => {
                 println!("skipping non-json file: {}", single_tree_path.display());
                 continue;
             }
@@ -91,8 +91,7 @@ pub fn process_fund_all(args: &Args, fund_all_args: &FundAllArgs) {
 
         println!(
             "Successfully transfer {} to merkle tree with airdrop version {}! signature: {signature:#?}",
-            merkle_tree.max_total_claim,
-            merkle_tree.airdrop_version
+            merkle_tree.max_total_claim, merkle_tree.airdrop_version
         );
     }
 }

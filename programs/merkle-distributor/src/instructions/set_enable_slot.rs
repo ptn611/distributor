@@ -1,4 +1,4 @@
-use anchor_lang::{context::Context, prelude::*, Accounts, Key, Result};
+use anchor_lang::{Accounts, Key, Result, context::Context, prelude::*};
 
 use crate::state::merkle_distributor::MerkleDistributor;
 
@@ -18,7 +18,6 @@ pub struct SetEnableSlot<'info> {
 }
 
 /// set enable slot
-#[allow(clippy::result_large_err)]
 pub fn handle_set_enable_slot(ctx: Context<SetEnableSlot>, enable_slot: u64) -> Result<()> {
     let distributor = &mut ctx.accounts.distributor;
     distributor.enable_slot = enable_slot;

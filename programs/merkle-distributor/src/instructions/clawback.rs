@@ -1,6 +1,6 @@
 // Instruction to clawback funds once they have expired
 
-use anchor_lang::{context::Context, prelude::*, Accounts, Key, Result};
+use anchor_lang::{Accounts, Key, Result, context::Context, prelude::*};
 use anchor_spl::{
     token,
     token::{Token, TokenAccount},
@@ -45,7 +45,6 @@ pub struct Clawback<'info> {
 /// 3. Marking the distributor as clawed back
 /// CHECK:
 ///     1. The distributor has not already been clawed back
-#[allow(clippy::result_large_err)]
 pub fn handle_clawback(ctx: Context<Clawback>) -> Result<()> {
     let distributor = &ctx.accounts.distributor;
 

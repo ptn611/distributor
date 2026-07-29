@@ -2,22 +2,15 @@ extern crate jito_merkle_tree;
 extern crate merkle_distributor;
 
 pub mod instructions;
-use std::{
-    collections::HashSet,
-    fs,
-    ops::Deref,
-    path::{Path, PathBuf},
-    rc::Rc,
-    str::FromStr,
-};
+use std::{fs, ops::Deref, path::PathBuf, rc::Rc, str::FromStr};
 
 use anchor_client::{
-    solana_sdk::signer::keypair::read_keypair_file, Client as AnchorClient, Cluster, Program,
+    Client as AnchorClient, Cluster, Program, solana_sdk::signer::keypair::read_keypair_file,
 };
 use anchor_lang::{
+    AccountDeserialize, InstructionData, Key, ToAccountMetas,
     prelude::{Clock, Pubkey},
     solana_program::sysvar,
-    AccountDeserialize, InstructionData, Key, ToAccountMetas,
 };
 use anchor_spl::token::{self, TokenAccount};
 use anyhow::Result;
@@ -35,7 +28,7 @@ use solana_rpc_client::rpc_client::{RpcClient, SerializableTransaction};
 use solana_sdk::{
     account::Account,
     commitment_config::CommitmentConfig,
-    signer::{keypair::Keypair, Signer},
+    signer::{Signer, keypair::Keypair},
     transaction::Transaction,
 };
 use spl_associated_token_account::{
@@ -246,7 +239,7 @@ pub struct CreateMerkleTreeArgs {
     pub amount: u64,
     #[clap(long, env)]
     pub decimals: u32,
-    
+
     /// Optional starting airdrop version. If not provided, will auto-detect next available version
     #[clap(long, env)]
     pub start_airdrop_version: Option<u64>,

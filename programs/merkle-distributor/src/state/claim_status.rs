@@ -42,7 +42,6 @@ impl ClaimStatus {
 
     /// Returns amount withdrawable, factoring in unlocked tokens and previous withdraws.
     /// payout is difference between the amount unlocked and the amount withdrawn
-    #[allow(clippy::result_large_err)]
     pub fn amount_withdrawable(&self, curr_ts: i64, start_ts: i64, end_ts: i64) -> Result<u64> {
         let amount = self
             .unlocked_amount(curr_ts, start_ts, end_ts)?
@@ -67,7 +66,6 @@ impl ClaimStatus {
     ///     approximate the above as:
     ///         b < 2^64 -1.
     ///     Since b is a i64, this is always true, so no truncation can occur
-    #[allow(clippy::result_large_err)]
     pub fn unlocked_amount(&self, curr_ts: i64, start_ts: i64, end_ts: i64) -> Result<u64> {
         if curr_ts >= start_ts {
             if curr_ts >= end_ts {
@@ -89,7 +87,6 @@ impl ClaimStatus {
         }
     }
 
-    #[allow(clippy::result_large_err)]
     pub fn update_unlocked_amount_claimed(
         &mut self,
         curr_ts: i64,
@@ -167,7 +164,7 @@ mod test {
         let start_ts = 1;
         let end_ts = 11;
 
-        let result = claim_status
+        claim_status
             .update_unlocked_amount_claimed(current_ts, start_ts, end_ts)
             .unwrap();
 
@@ -178,7 +175,7 @@ mod test {
         let start_ts = 1;
         let end_ts = 11;
 
-        let result = claim_status
+        claim_status
             .update_unlocked_amount_claimed(current_ts, start_ts, end_ts)
             .unwrap();
 
@@ -189,7 +186,7 @@ mod test {
         let start_ts = 1;
         let end_ts = 11;
 
-        let result = claim_status
+        claim_status
             .update_unlocked_amount_claimed(current_ts, start_ts, end_ts)
             .unwrap();
 
@@ -200,7 +197,7 @@ mod test {
         let start_ts = 1;
         let end_ts = 11;
 
-        let result = claim_status
+        claim_status
             .update_unlocked_amount_claimed(current_ts, start_ts, end_ts)
             .unwrap();
 

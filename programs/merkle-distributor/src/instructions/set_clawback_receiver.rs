@@ -1,8 +1,8 @@
 use anchor_lang::{
+    Accounts, Result, ToAccountInfo,
     accounts::{account::Account, signer::Signer},
     context::Context,
     prelude::*,
-    Accounts, Result, ToAccountInfo,
 };
 use anchor_spl::token::TokenAccount;
 
@@ -27,7 +27,6 @@ pub struct SetClawbackReceiver<'info> {
 /// Sets new clawback receiver token account
 /// CHECK:
 ///     1. The new clawback receiver is not the same as the old one
-#[allow(clippy::result_large_err)]
 pub fn handle_set_clawback_receiver(ctx: Context<SetClawbackReceiver>) -> Result<()> {
     require!(
         ctx.accounts.distributor.clawback_receiver.key() != ctx.accounts.new_clawback_account.key(),

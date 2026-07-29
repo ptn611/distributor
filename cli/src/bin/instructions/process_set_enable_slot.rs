@@ -1,5 +1,3 @@
-use solana_sdk::signature::Signature;
-
 use crate::*;
 
 pub fn process_set_enable_slot(args: &Args, set_enable_slot_args: &SetEnableSlotArgs) {
