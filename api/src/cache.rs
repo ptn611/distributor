@@ -20,7 +20,7 @@ use solana_rpc_client_api::{
     config::{RpcAccountInfoConfig, RpcProgramAccountsConfig},
     filter::{Memcmp, RpcFilterType},
 };
-use solana_sdk::commitment_config::CommitmentConfig;
+use solana_commitment_config::CommitmentConfig;
 
 use crate::{error::ApiError, router::SingleDistributor};
 

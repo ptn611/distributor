@@ -1,5 +1,5 @@
 use crate::*;
-use solana_sdk::compute_budget::ComputeBudgetInstruction;
+use solana_program::compute_budget::ComputeBudgetInstruction;
 
 pub fn process_fund_all(args: &Args, fund_all_args: &FundAllArgs) {
     let program = args.get_program_client();

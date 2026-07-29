@@ -12,6 +12,7 @@ serde = { workspace = true }
 serde_json = { workspace = true }
 solana-program = { workspace = true }
 solana-sdk = { workspace = true }
+solana-hash = "3"
 thiserror = { workspace = true }
 
 [dev-dependencies]

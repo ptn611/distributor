@@ -2101,6 +2101,7 @@ dependencies = [
  "rand 0.8.7",
  "serde",
  "serde_json",
+ "solana-hash 3.1.0",
  "solana-program",
  "solana-sdk",
  "thiserror 1.0.69",

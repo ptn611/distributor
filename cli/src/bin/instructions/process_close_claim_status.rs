@@ -1,4 +1,4 @@
-use anchor_client::solana_client::rpc_filter::{Memcmp, RpcFilterType};
+use anchor_client::{filter::Memcmp, RpcFilterType};
 use merkle_distributor::state::claim_status::ClaimStatus;
 
 use crate::*;

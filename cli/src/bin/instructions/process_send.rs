@@ -4,10 +4,9 @@ use std::{
     io::{Read, Write},
 };
 
-use solana_sdk::{
-    commitment_config::CommitmentLevel, compute_budget::ComputeBudgetInstruction,
-    signature::Signature,
-};
+use solana_commitment_config::CommitmentLevel;
+use solana_compute_budget_instruction::ComputeBudgetInstruction;
+use solana_signature::Signature;
 
 use crate::*;
 

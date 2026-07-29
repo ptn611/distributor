@@ -25,12 +25,11 @@ use jito_merkle_tree::{
 use merkle_distributor::state::merkle_distributor::MerkleDistributor;
 use solana_program::{clock::DEFAULT_MS_PER_SLOT, instruction::Instruction};
 use solana_rpc_client::rpc_client::{RpcClient, SerializableTransaction};
-use solana_sdk::{
-    account::Account,
-    commitment_config::CommitmentConfig,
-    signer::{Signer, keypair::Keypair},
-    transaction::Transaction,
-};
+use anchor_client::{CommitmentConfig, RpcSendTransactionConfig};
+use solana_instruction::Instruction;
+use solana_keypair::Keypair;
+use solana_signer::Signer;
+use solana_transaction::Transaction;
 use spl_associated_token_account::{
     get_associated_token_address, instruction::create_associated_token_account,
 };
