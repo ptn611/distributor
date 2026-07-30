@@ -30,7 +30,7 @@ pub fn process_new_claim(args: &Args, claim_args: &ClaimArgs) {
             if e.to_string().contains("AccountNotFound") {
                 println!("PDA does not exist. creating.");
                 let ix =
-                    create_associated_token_account(&claimant, &claimant, &args.mint, &token::ID);
+                    create_associated_token_account(&claimant, &claimant, &args.mint, &spl_token_interface::ID);
                 ixs.push(ix);
             } else {
                 panic!("Error fetching PDA: {e}")
@@ -46,8 +46,8 @@ pub fn process_new_claim(args: &Args, claim_args: &ClaimArgs) {
             from: get_associated_token_address(&distributor, &args.mint),
             to: claimant_ata,
             claimant,
-            token_program: token::ID,
-            system_program: solana_program::system_program::ID,
+            token_program: spl_token_interface::ID,
+            system_program: anchor_lang::system_program::ID,
         }
         .to_account_metas(None),
         data: merkle_distributor::instruction::NewClaim {

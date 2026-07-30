@@ -1,5 +1,5 @@
 use crate::*;
-use solana_compute_budget_instruction::ComputeBudgetInstruction;
+use solana_compute_budget_interface::ComputeBudgetInstruction;
 
 pub fn process_new_distributor(args: &Args, new_distributor_args: &NewDistributorArgs) {
     let client = RpcClient::new_with_commitment(&args.rpc_url, CommitmentConfig::finalized());
@@ -79,7 +79,7 @@ pub fn process_new_distributor(args: &Args, new_distributor_args: &NewDistributo
                     &keypair.pubkey(),
                     &distributor_pubkey,
                     &args.mint,
-                    &spl_token::ID,
+                    &spl_token_interface::ID,
                 ),
             );
         }
@@ -99,9 +99,9 @@ pub fn process_new_distributor(args: &Args, new_distributor_args: &NewDistributo
                 mint: args.mint,
                 token_vault,
                 distributor: distributor_pubkey,
-                system_program: solana_program::system_program::id(),
+                system_program: anchor_lang::system_program::ID,
                 associated_token_program: spl_associated_token_account::ID,
-                token_program: token::ID,
+                token_program: spl_token_interface::ID,
                 admin: keypair.pubkey(),
             }
             .to_account_metas(None),

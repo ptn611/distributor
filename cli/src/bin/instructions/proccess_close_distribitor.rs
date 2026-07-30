@@ -43,7 +43,7 @@ pub fn process_close_distributor(args: &Args, close_distributor_args: &CloseDist
                 token_vault: merkle_distributor_state.token_vault,
                 admin: keypair.pubkey(),
                 destination_token_account,
-                token_program: spl_token::ID,
+                token_program: spl_token_interface::ID,
             }
             .to_account_metas(None),
             data: merkle_distributor::instruction::CloseDistributor {}.data(),

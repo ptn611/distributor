@@ -35,7 +35,7 @@ pub fn process_clawback(args: &Args, clawback_args: &ClawbackArgs) {
                 accounts: merkle_distributor::accounts::Clawback {
                     distributor,
                     from: distributor_state.token_vault,
-                    token_program: spl_token::ID,
+                    token_program: spl_token_interface::ID,
                     to: distributor_state.clawback_receiver,
                     claimant: keypair.pubkey(),
                     system_program: system_program::ID,

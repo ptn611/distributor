@@ -1,5 +1,5 @@
 use crate::*;
-use solana_compute_budget_instruction::ComputeBudgetInstruction;
+use solana_compute_budget_interface::ComputeBudgetInstruction;
 
 pub fn process_claim(args: &Args, claim_args: &ClaimArgs) {
     let keypair = read_keypair_file(&args.keypair_path.clone().unwrap())
@@ -53,7 +53,7 @@ pub fn process_claim(args: &Args, claim_args: &ClaimArgs) {
             from: get_associated_token_address(&distributor, &args.mint),
             to: claimant_ata,
             claimant,
-            token_program: token::ID,
+            token_program: spl_token_interface::ID,
         }
         .to_account_metas(None),
         data: merkle_distributor::instruction::ClaimLocked {}.data(),

@@ -5,7 +5,7 @@ use std::{
 };
 
 use solana_commitment_config::CommitmentLevel;
-use solana_compute_budget_instruction::ComputeBudgetInstruction;
+use solana_compute_budget_interface::ComputeBudgetInstruction;
 use solana_signature::Signature;
 
 use crate::*;
@@ -43,14 +43,14 @@ fn send_for_batch_address(
                             &keypair.pubkey(),
                             &user,
                             &args.mint,
-                            &spl_token::ID,
+                            &spl_token_interface::ID,
                         ),
                     );
                 }
 
                 mass_ixs.push(
-                    spl_token::instruction::transfer(
-                        &spl_token::id(),
+                    spl_token_interface::instruction::transfer(
+                        &spl_token_interface::id(),
                         &source_vault,
                         &user_ata,
                         &keypair.pubkey(),

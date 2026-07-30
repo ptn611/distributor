@@ -19,7 +19,7 @@ pub fn process_set_enable_slot_by_time(
 
     let enable_time = set_enable_slot_by_time_args.timestamp;
 
-    let clock_account = client.get_account(&sysvar::clock::id()).unwrap();
+    let clock_account = client.get_account(&solana_program::sysvar::clock::id()).unwrap();
     let clock = deserialize::<Clock>(&clock_account.data).unwrap();
     let current_time = u64::try_from(clock.unix_timestamp).unwrap();
     let current_slot = clock.slot;

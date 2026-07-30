@@ -1,5 +1,5 @@
 use crate::*;
-use solana_compute_budget_instruction::ComputeBudgetInstruction;
+use solana_compute_budget_interface::ComputeBudgetInstruction;
 
 pub fn process_fund_all(args: &Args, fund_all_args: &FundAllArgs) {
     let program = args.get_program_client();
@@ -69,8 +69,8 @@ pub fn process_fund_all(args: &Args, fund_all_args: &FundAllArgs) {
         }
 
         ixs.push(
-            spl_token::instruction::transfer(
-                &spl_token::id(),
+            spl_token_interface::instruction::transfer(
+                &spl_token_interface::id(),
                 &source_vault,
                 &token_vault,
                 &keypair.pubkey(),

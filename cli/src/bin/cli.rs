@@ -4,14 +4,13 @@ extern crate merkle_distributor;
 pub mod instructions;
 use std::{fs, ops::Deref, path::PathBuf, rc::Rc, str::FromStr};
 
-use anchor_client::{Client as AnchorClient, Cluster, Program, CommitmentConfig, RpcSendTransactionConfig};
+use anchor_client::{Client as AnchorClient, Cluster, Program, CommitmentConfig};
 use solana_keypair::read_keypair_file;
 use anchor_lang::{
     AccountDeserialize, InstructionData, Key, ToAccountMetas,
     prelude::{Clock, Pubkey},
-    solana_program::sysvar,
 };
-use anchor_spl::token::{self, TokenAccount};
+use anchor_spl::token::TokenAccount;
 use anyhow::Result;
 use bincode::deserialize;
 use clap::{Parser, Subcommand};
@@ -23,9 +22,9 @@ use jito_merkle_tree::{
 };
 use merkle_distributor::state::merkle_distributor::MerkleDistributor;
 use solana_program::{clock::DEFAULT_MS_PER_SLOT, instruction::Instruction};
+use solana_sdk::account::Account;
 use solana_rpc_client::rpc_client::{RpcClient, SerializableTransaction};
-use anchor_client::{CommitmentConfig, RpcSendTransactionConfig};
-use solana_instruction::Instruction;
+
 use solana_keypair::Keypair;
 use solana_signer::Signer;
 use solana_transaction::Transaction;
@@ -65,10 +64,9 @@ impl Args {
     fn get_program_client(&self) -> Program<Rc<Keypair>> {
         let payer = read_keypair_file(self.keypair_path.clone().unwrap())
             .expect("Wallet keypair file not found");
-        // let payer = Keypair::new();
         let client = AnchorClient::new_with_options(
             Cluster::Custom(self.rpc_url.clone(), self.rpc_url.clone()),
-            Rc::new(Keypair::from_bytes(&payer.to_bytes()).unwrap()),
+            Rc::new(payer),
             CommitmentConfig::finalized(),
         );
         let program: anchor_client::Program<Rc<Keypair>> =
@@ -605,7 +603,7 @@ fn get_or_create_ata<C: Deref<Target = impl Signer> + Clone>(
                 &program_client.payer(),
                 &user,
                 &token_mint,
-                &spl_token::ID,
+                &spl_token_interface::ID,
             ),
         );
 
