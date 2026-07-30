@@ -21,7 +21,7 @@ pub struct SetAdmin<'info> {
     /// New admin account
     /// CHECK: this can be any new account
     #[account(mut)]
-    pub new_admin: AccountInfo<'info>,
+    pub new_admin: UncheckedAccount<'info>,
 }
 
 /// Sets new admin account

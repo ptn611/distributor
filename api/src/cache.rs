@@ -220,7 +220,7 @@ impl Cache {
                 let rpc_client = RpcClient::new(rpc_url.clone());
                 let gpa_config_clone = gpa_config.clone();
                 match rpc_client
-                    .get_program_accounts_with_config(&program_id, gpa_config_clone)
+                    .get_program_ui_accounts_with_config(&program_id, gpa_config_clone)
                     .await
                 {
                     Ok(accounts) => {
@@ -231,8 +231,15 @@ impl Cache {
                             .map(|(pubkey, account)| {
                                 let update_tx_clone = update_tx_clone.clone();
                                 tokio::spawn(async move {
+                                    let raw_data = match account.data.decode() {
+                                        Some(data) => data,
+                                        None => {
+                                            tracing::error!("Failed to decode account data for {pubkey}");
+                                            return;
+                                        }
+                                    };
                                     let data =
-                                        ClaimStatus::try_deserialize(&mut account.data.as_slice())
+                                        ClaimStatus::try_deserialize(&mut raw_data.as_slice())
                                             .map_err(|err| ApiError::InternalError(Box::new(err)))
                                             .unwrap();
                                     update_tx_clone
