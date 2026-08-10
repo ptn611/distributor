@@ -36,10 +36,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/velocity-exchange/distributor.git"
+    "url": "git+https://github.com/ptn611/distributor.git"
   },
   "bugs": {
-    "url": "https://github.com/velocity-exchange/distributor/issues"
+    "url": "https://github.com/ptn611/distributor/issues"
   },
-  "homepage": "https://github.com/velocity-exchange/distributor#readme"
+  "homepage": "https://github.com/ptn611/distributor#readme"
 }
